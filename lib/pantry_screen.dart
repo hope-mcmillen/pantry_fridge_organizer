@@ -37,41 +37,49 @@ final List<PantryItem> items = [
 PantryItem(
 id: 'milk',
 name: 'Milk',
+imagePath: 'assets/ingredients/dairy.webp',
 inFridge: true,
 ),
 PantryItem(
 id: 'eggs',
 name: 'Eggs',
+imagePath: 'assets/ingredients/dairy.webp',
 inFridge: true,
 ),
 PantryItem(
 id: 'cheese',
 name: 'Cheese',
+imagePath: 'assets/ingredients/dairy.webp',
 inFridge: true,
 ),
 PantryItem(
 id: 'butter',
 name: 'Butter',
+imagePath: 'assets/ingredients/dairy.webp',
 inFridge: true,
 ),
 PantryItem(
 id: 'chicken',
 name: 'Chicken',
+imagePath: 'assets/ingredients/meat.webp',
 inFridge: false,
 ),
 PantryItem(
 id: 'tomatoes',
 name: 'Tomatoes',
+imagePath: 'assets/ingredients/vegetables.webp',
 inFridge: false,
 ),
 PantryItem(
 id: 'apples',
 name: 'Apples',
+imagePath: 'assets/ingredients/fruit.webp',
 inFridge: false,
 ),
 PantryItem(
 id: 'yogurt',
 name: 'Yogurt',
+imagePath: 'assets/ingredients/dairy.webp',
 inFridge: false,
 ),
 ];
