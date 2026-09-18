@@ -6,6 +6,7 @@
 // starter ingredients, and that a drag actually moves an item.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:pantry_fridge_organizer/main.dart';
 import 'package:pantry_fridge_organizer/pantry_screen.dart';
@@ -14,10 +15,8 @@ import 'package:pantry_fridge_organizer/pantry_screen.dart';
 Finder shelf(String title) => find.widgetWithText(PantrySection, title);
 
 /// The jar label for [item], but only the one sitting on the [title] shelf.
-Finder itemOnShelf(String title, String item) => find.descendant(
-      of: shelf(title),
-      matching: find.text(item),
-    );
+Finder itemOnShelf(String title, String item) =>
+    find.descendant(of: shelf(title), matching: find.text(item));
 
 /// Drags [item] off the [from] shelf and drops it onto the [to] shelf.
 Future<void> dragItem(
@@ -41,9 +40,16 @@ Future<void> dragItem(
 }
 
 void main() {
-  testWidgets('both shelves render with their starter ingredients',
-      (WidgetTester tester) async {
+  setUp(() {
+    // Each test starts with a first-launch pantry, independent of other tests.
+    SharedPreferences.setMockInitialValues({});
+  });
+
+  testWidgets('both shelves render with their starter ingredients', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const PantryOrganizerApp());
+    await tester.pumpAndSettle();
 
     expect(find.text('Pantry Organizer'), findsOneWidget);
     expect(find.text('What do you have right now?'), findsOneWidget);
@@ -62,9 +68,11 @@ void main() {
     expect(itemOnShelf('Need to Buy', 'Milk'), findsNothing);
   });
 
-  testWidgets('dragging an ingredient onto the fridge shelf moves it there',
-      (WidgetTester tester) async {
+  testWidgets('dragging an ingredient onto the fridge shelf moves it there', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const PantryOrganizerApp());
+    await tester.pumpAndSettle();
 
     await dragItem(
       tester,
@@ -77,9 +85,11 @@ void main() {
     expect(itemOnShelf('Need to Buy', 'Chicken'), findsNothing);
   });
 
-  testWidgets('dragging an ingredient onto the shopping shelf moves it there',
-      (WidgetTester tester) async {
+  testWidgets('dragging an ingredient onto the shopping shelf moves it there', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const PantryOrganizerApp());
+    await tester.pumpAndSettle();
 
     await dragItem(
       tester,
@@ -92,9 +102,11 @@ void main() {
     expect(itemOnShelf('In My Fridge', 'Milk'), findsNothing);
   });
 
-  testWidgets('dropping an ingredient back on its own shelf is a no-op',
-      (WidgetTester tester) async {
+  testWidgets('dropping an ingredient back on its own shelf is a no-op', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const PantryOrganizerApp());
+    await tester.pumpAndSettle();
 
     await dragItem(
       tester,
